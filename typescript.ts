@@ -74,3 +74,72 @@ printId("menubar");
 let hidden: unknown = "false";
 
 console.log(typeof (hidden));
+
+interface Rect{
+  getArea(): number
+}
+
+class Rectangle implements Rect{
+  public width: number;
+  public height: number;
+  public constructor(width:number, height:number) {
+    this.width = width;
+    this.height = height;
+  }
+
+  getArea(): number{
+    return this.width * this.height;
+  }
+}
+
+const person: Rectangle = new Rectangle(30, 20);
+
+// console.log(person.width, typeof person);
+
+class Square extends Rectangle{
+  constructor(width: number) {
+    super(width, width)
+  }
+}
+
+const person1: Square = new Square(4)
+
+console.log(person1.getArea());
+
+
+interface wrapped<t, s>{
+  name: t | undefined;
+  age: s | undefined;
+}
+
+const merchant: wrapped<string, number> = {
+  name: "Jason",
+  age: 23,
+}
+
+console.log(merchant.name);
+
+type Jom<m> = m | undefined
+
+let monseiur: Jom<string> = "Hey There";
+
+console.log(monseiur)
+
+type vars<s> = s | undefined
+
+let monkey: vars<string> = "what is going on here?";
+
+console.log(monkey);
+
+interface Carp{
+  name: string,
+  age: number,
+}
+
+let cars: Required<Carp> = {
+  name: "",
+  age: 0
+}
+cars.name = "demo";
+cars.age = 40
+console.log(cars)
