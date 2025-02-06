@@ -1,4 +1,11 @@
 "use strict";
+// document.body.style.backgroundColor = "black"
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 function greet(name) {
     return `Hello ${name}`;
 }
@@ -78,3 +85,76 @@ let cars = {
 cars.name = "demo";
 cars.age = 40;
 console.log(cars);
+let you = {
+    name: "Jason",
+    age: 23,
+};
+console.log(you);
+function LoggerFunc(msg) {
+    return function Logger(target) {
+        console.log(msg);
+    };
+}
+function decorateFactory(template) {
+    return function (target) {
+        return class extends target {
+            constructor(...args) {
+                super(...args);
+                let elem = document.getElementById('man');
+                if (!elem) {
+                    elem = document.createElement('div');
+                    elem.id = "man";
+                    document.body.append(elem);
+                }
+                elem.innerHTML = template;
+                let h2 = elem.querySelector('h2');
+                if (h2) {
+                    h2.innerHTML = "Hello Mr. " + this.user;
+                }
+            }
+        };
+    };
+}
+let Printer = class Printer {
+    constructor(user, age) {
+        this.user = user;
+        this.age = age;
+        console.log("user logged in currently");
+    }
+};
+Printer = __decorate([
+    LoggerFunc("Hello there, this is Sensational!!"),
+    decorateFactory('<h2>Hello There</h2>')
+], Printer);
+const yours = new Printer("Jason", 30);
+const yourss = new Printer("Lois", 34);
+const yourssa = new Printer("Preye", 34);
+const yourssac = new Printer("Peye", 34);
+console.log(yours);
+function decorated(target, propertyKey) {
+    let value;
+    Object.defineProperty(target, propertyKey, {
+        get: function () {
+            return value;
+        },
+        set: function (newValue) {
+            return value = newValue.charAt(0).toUpperCase() + newValue.slice(1).toLowerCase();
+        },
+        enumerable: true,
+        configurable: true,
+    });
+}
+class Product {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+__decorate([
+    decorated
+], Product.prototype, "name", void 0);
+let fresh = new Product("john", 30);
+let fresh1 = new Product("MARTHA", 30);
+// fresh.theNamed = "marhomark"
+// console.log(fresh.named)
+console.log(fresh);

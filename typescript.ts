@@ -1,3 +1,5 @@
+// document.body.style.backgroundColor = "black"
+
 function greet(name: string): string{
   return `Hello ${name}`;
 }
@@ -143,3 +145,112 @@ let cars: Required<Carp> = {
 cars.name = "demo";
 cars.age = 40
 console.log(cars)
+
+interface Man<s, n>{
+  name: s,
+  age: n,
+}
+
+let you: Man<string, number> = {
+  name: "Jason",
+  age: 23,
+}
+
+console.log(you)
+
+function LoggerFunc(msg: string) {
+  return function Logger(target: Function) {
+    console.log(msg)
+  }
+}
+
+function decorateFactory(template: string): Function{
+  
+  return function (target: any) {
+    return class extends target {
+      constructor(...args: any[]) {
+        super(...args);
+      
+        let elem = document.getElementById('man')
+        if (!elem) {
+           elem = document.createElement('div')
+          elem.id = "man"
+          document.body.append(elem)
+        }
+          elem.innerHTML = template;
+          let h2 = elem.querySelector('h2');
+          if (h2) {
+            
+            h2.innerHTML = "Hello Mr. " + this.user;
+          }
+        
+
+      }
+    }
+  }
+  
+}
+
+
+
+
+@LoggerFunc("Hello there, this is Sensational!!")
+@decorateFactory('<h2>Hello There</h2>')
+class Printer{
+    user: string;
+    age: number;
+
+  constructor(user: string, age: number) {
+    this.user = user;
+    this.age = age;
+    console.log("user logged in currently")
+  }
+}
+
+const yours = new Printer("Jason", 30);
+const yourss = new Printer("Lois", 34);
+const yourssa = new Printer("Preye", 34);
+const yourssac = new Printer("Peye", 34);
+
+console.log(yours)
+
+
+function decorated(target:any, propertyKey: string) {
+  let value: string;
+
+  Object.defineProperty(target, propertyKey, {
+    get: function() {
+      return value;
+    },
+
+    set: function(newValue) {
+      return value = newValue.charAt(0).toUpperCase() + newValue.slice(1).toLowerCase();
+    }, 
+
+    enumerable: true,
+
+    configurable: true,
+  })
+  
+}
+
+class Product{
+
+  @decorated
+  name!: string;
+  age: number;
+
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+
+ 
+}
+
+let fresh = new Product("john", 30)
+let fresh1 = new Product("MARTHA", 30)
+
+// fresh.theNamed = "marhomark"
+// console.log(fresh.named)
+console.log(fresh)
